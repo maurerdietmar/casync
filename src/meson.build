@@ -156,10 +156,11 @@ libcasync = shared_library(
         soversion : '0',
         install: true)
 
-libshared = static_library(
-              'shared',
+libcasync_static = static_library(
+              'casync',
               libshared_sources,
-              util_sources)
+              util_sources,
+              install: true)
 
 casync_sources = files('''
         casync-tool.c
