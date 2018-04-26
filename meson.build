@@ -50,7 +50,6 @@ c_args = '''
         -fno-common
         -fdiagnostics-show-option
         -fno-strict-aliasing
-        -fvisibility=hidden
         -fstack-protector
         -fstack-protector-strong
         -fPIE
@@ -159,7 +158,7 @@ subdir('doc')
 casync = executable(
         'casync',
         casync_sources,
-        link_with : libshared,
+        link_with : libcasync,
         dependencies : [
                 libacl,
                 libfuse,
@@ -175,7 +174,7 @@ casync = executable(
 casync_http = executable(
         'casync-http',
         casync_http_sources,
-        link_with : libshared,
+        link_with : libcasync,
         dependencies : [
                 libcurl,
                 liblzma,
@@ -315,7 +314,7 @@ foreach test_name : test_sources + non_test_sources
         exe = executable(
                 test_name,
                 'test/@0@.c'.format(test_name),
-                link_with : libshared,
+                link_with : libcasync,
                 include_directories : includes,
                 dependencies : [
                         libacl,

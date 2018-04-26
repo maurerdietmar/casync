@@ -7,6 +7,55 @@ util_sources = files('''
         util.h
 '''.split())
 
+libcasync_headers = files('''
+        cacache.h
+        cachunk.h
+        cachunker.h
+        cachunkid.h
+        cacommon.h
+        cacompression.h
+        cadecoder.h
+        cadigest.h
+        caencoder.h
+        cafileroot.h
+        caformat-util.h
+        caformat.h
+        camatch.h
+        caindex.h
+        calocation.h
+        camakebst.h
+        canametable.h
+        canbd.h
+        caorigin.h
+        caprotocol-util.h
+        caprotocol.h
+        caremote.h
+        caseed.h
+        castore.h
+        casync.h
+        cautil.h
+        chattr.h
+        compressor.h
+        def.h
+        dirent-util.h
+        fssize.h
+        gc.h
+        gcc-macro.h
+        hash-funcs.h
+        hashmap.h
+        mempool.h
+        notify.h
+        parse-util.h
+        quota-projid.h
+        realloc-buffer.h
+        reflink.h
+        rm-rf.h
+        set.h
+        siphash24.h
+'''.split())
+
+install_headers(libcasync_headers, subdir: 'casync')
+
 libshared_sources = files('''
         cacache.c
         cacache.h
@@ -91,6 +140,21 @@ libshared_sources = files('''
         siphash24.c
         siphash24.h
 '''.split())
+
+libcasync = shared_library(
+        'casync',
+        [libshared_sources, util_sources],
+        dependencies : [
+                liblzma,
+                libzstd,
+                libz,
+                libacl,
+                libselinux,
+                math,
+                openssl],
+        version : '0.1',
+        soversion : '0',
+        install: true)
 
 libshared = static_library(
               'shared',
